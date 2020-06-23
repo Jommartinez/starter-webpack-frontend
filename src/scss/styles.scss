@@ -7,21 +7,14 @@ URL: https://jommartinez.com
 */
 
 /* General */
-@import "base/fonts";
-@import "base/vars";
-// Override bootstrap variables
-@import "bootstrap/functions";
-@import "bootstrap/mixins";
-@import "base/variables";
-// Bootstrap Framework.
-@import "bootstrap/bootstrap";
-@import "base/reset";
-@import "base/mixins";
-@import "base/global";
+@import 'base/fonts';
+@import 'base/vars';
+@import 'base/reset';
+@import 'base/mixins';
+@import 'base/global';
 
 /****************** Partials ******************/
-@import "partials/header";
-@import "partials/footer";
-
+@import 'partials/header';
+@import 'partials/footer';
 /****************** Componentes ******************/
-@import "components/componente";
+@import 'components/componente';

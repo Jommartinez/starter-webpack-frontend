@@ -9,9 +9,6 @@ const serverConfiguration = {
 		},
 		port: 3000,
 	},
-	external: {
-		proxy: 'http://localhost:9000/path/to/project/',
-	},
 }
 
 const path = require('path')
@@ -19,6 +16,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPugPlugin = require('html-webpack-pug-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -26,11 +24,7 @@ const ImageMinPlugin = require('imagemin-webpack-plugin').default
 
 let targetServerConfiguration = serverConfiguration.internal
 
-const config = function (env, args) {
-	if (args.externalServer !== undefined && args.externalServer) {
-		targetServerConfiguration = serverConfiguration.external
-	}
-
+const config = function () {
 	return {
 		entry: {
 			app: './src/js/app.js',
@@ -41,6 +35,10 @@ const config = function (env, args) {
 		},
 		module: {
 			rules: [
+				{
+					test: /\.pug$/,
+					use: ['pug-loader'],
+				},
 				{
 					test: /\.scss$/,
 					use: [
@@ -114,19 +112,34 @@ const config = function (env, args) {
 				reloadDelay: 0,
 			}),
 			new HtmlWebpackPlugin({
-				inject: true,
-				hash: false,
+				title: 'Titulo index',
 				filename: 'index.html',
-				template: path.resolve(__dirname, 'src', 'index.html'),
-				favicon: path.resolve(__dirname, 'src', 'images', 'favicon.ico'),
+				template: path.resolve(__dirname, 'src', 'pug', 'index.pug'),
+				favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
+				meta: {
+					charset: 'UTF-8',
+					viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+					author: 'acute&creative - Jonathan Martínez_',
+					copyright: 'acute&creative - Jonathan Martínez_',
+				},
+				inject: true,
+				hash: true,
 			}),
 			new HtmlWebpackPlugin({
-				inject: true,
-				hash: false,
+				title: 'Titulo about',
 				filename: 'about.html',
-				template: path.resolve(__dirname, 'src', 'about.html'),
-				favicon: path.resolve(__dirname, 'src', 'images', 'favicon.ico'),
+				template: path.resolve(__dirname, 'src', 'pug', 'about.pug'),
+				favicon: path.resolve(__dirname, 'src', 'favicon.ico'),
+				meta: {
+					charset: 'UTF-8',
+					viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
+					author: 'acute&creative - Jonathan Martínez_',
+					copyright: 'acute&creative - Jonathan Martínez_',
+				},
+				inject: true,
+				hash: true,
 			}),
+			new HtmlWebpackPugPlugin(),
 			new MiniCssExtractPlugin({
 				filename: 'css/[name].css',
 			}),
@@ -141,8 +154,8 @@ const config = function (env, args) {
 			}),
 			new CopyWebpackPlugin([
 				{
-					from: path.resolve(__dirname, 'src', 'images', 'content'),
-					to: path.resolve(__dirname, 'dist', 'images', 'content'),
+					from: path.resolve(__dirname, 'src', 'images'),
+					to: path.resolve(__dirname, 'dist', 'images'),
 					toType: 'dir',
 				},
 			]),

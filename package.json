@@ -5,7 +5,7 @@
 	"homepage": "https://jommartinez.com",
 	"scripts": {
 		"build": "webpack --mode=development",
-		"watch": "webpack --mode=development --watch",
+		"dev": "webpack --mode=development --watch",
 		"production": "cross-env NODE_ENV=production webpack --mode=production"
 	},
 	"keywords": [
@@ -20,7 +20,8 @@
 		"node": ">=10.13.0"
 	},
 	"dependencies": {
-		"autoprefixer": "^9.8.0"
+		"autoprefixer": "^9.8.0",
+		"html-webpack-pug-plugin": "^2.0.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.10.2",
@@ -42,6 +43,8 @@
 		"node-sass": "^4.14.1",
 		"optimize-css-assets-webpack-plugin": "^5.0.3",
 		"postcss-loader": "^3.0.0",
+		"pug": "^3.0.0",
+		"pug-loader": "^2.4.0",
 		"sass": "^1.26.7",
 		"sass-loader": "^8.0.2",
 		"style-loader": "^1.2.1",
